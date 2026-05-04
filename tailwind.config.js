@@ -14,9 +14,13 @@ export default {
             boxShadow: '0 0 26px rgba(56, 189, 248, 0.22), 0 0 48px rgba(20, 184, 166, 0.1)',
           },
         },
+        workflowDash: {
+          to: { strokeDashoffset: '-56' },
+        },
       },
       animation: {
         'roadmap-badge': 'roadmapBadgeGlow 3s ease-in-out infinite',
+        'workflow-dash': 'workflowDash 14s linear infinite',
       },
     },
   },

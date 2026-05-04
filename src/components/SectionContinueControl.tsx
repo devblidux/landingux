@@ -46,10 +46,11 @@ export default function SectionContinueControl() {
   };
 
   const primaryLabel = activeIndex === 0 ? 'Comenzar historia' : 'Continuar';
+  const total = STORY_SECTIONS.length;
 
   return (
     <div
-      className={`fixed bottom-6 left-0 right-0 z-[100] flex justify-center px-4 pointer-events-none pb-[max(1rem,env(safe-area-inset-bottom))] transition-all duration-1000 ${
+      className={`fixed bottom-6 left-0 right-0 z-[100] flex flex-col items-center gap-2 px-4 pointer-events-none pb-[max(1rem,env(safe-area-inset-bottom))] transition-all duration-1000 ${
         activeIndex === 0 && !heroCtaVisible ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
       }`}
       aria-live="polite"
@@ -72,6 +73,17 @@ export default function SectionContinueControl() {
         <ChevronDown className="relative z-10 w-5 h-5 shrink-0 animate-bounce" aria-hidden />
         <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </button>
+
+      {nextPreview != null && (
+        <>
+          <p className="text-center text-[11px] font-medium uppercase tracking-[0.12em] text-white/45">
+            Siguiente · {activeIndex + 1}/{total}
+          </p>
+          <p className="max-w-[min(100vw-4rem,22rem)] text-center text-sm leading-snug text-white/55">
+            {nextPreview}
+          </p>
+        </>
+      )}
     </div>
   );
 }
