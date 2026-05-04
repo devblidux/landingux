@@ -79,14 +79,14 @@ const impactByVertical: Record<ImpactVertical, ImpactProject[]> = {
       title: 'Comités Paritarios · Programa de trabajo',
       summary:
         'Mejora de usabilidad del programa de trabajo y seguimiento alineado a las necesidades de los integrantes; se exploraron tres vistas UI distintas.',
-      href: 'https://minutas-cphs.vercel.app/programa-trabajo',
+      href: 'https://minutas-cphs.vercel.app/',
     },
     {
       icon: FilePenLine,
       title: 'Comités Paritarios · Minutas',
       summary:
         'Herramienta para facilitar la generación y el resguardo de minutas de reuniones ordinarias, requisito legal y fiscalizable.',
-      href: 'https://minutas-cphs.vercel.app/minutas',
+      href: 'https://minutas-cphs.vercel.app/',
     },
     {
       icon: BarChart3,
@@ -380,7 +380,7 @@ export default function NewWorkflowSection() {
               onClick={() => setImpactTab('preventivo')}
               className={`relative flex-1 rounded-full px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.08em] transition-all sm:text-[13px] ${
                 impactTab === 'preventivo'
-                  ? 'bg-sky-500/25 text-sky-100 shadow-sm ring-1 ring-sky-400/25'
+                  ? 'bg-emerald-500/25 text-emerald-100 shadow-sm ring-1 ring-emerald-400/25'
                   : 'text-white/40 hover:text-white/65'
               }`}
             >
@@ -395,7 +395,7 @@ export default function NewWorkflowSection() {
               onClick={() => setImpactTab('salud')}
               className={`relative flex-1 rounded-full px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.08em] transition-all sm:text-[13px] ${
                 impactTab === 'salud'
-                  ? 'bg-emerald-500/25 text-emerald-100 shadow-sm ring-1 ring-emerald-400/25'
+                  ? 'bg-sky-500/25 text-sky-100 shadow-sm ring-1 ring-sky-400/25'
                   : 'text-white/40 hover:text-white/65'
               }`}
             >
@@ -410,7 +410,7 @@ export default function NewWorkflowSection() {
             className="mx-auto mt-5 grid max-w-3xl gap-2 sm:grid-cols-2 sm:gap-x-3 sm:gap-y-2"
           >
             {impactByVertical[impactTab].map((project, idx) => (
-              <ProjectCard key={`${impactTab}-${idx}`} project={project} accent={impactTab === 'preventivo' ? 'sky' : 'emerald'} />
+              <ProjectCard key={`${impactTab}-${idx}`} project={project} accent={impactTab === 'preventivo' ? 'emerald' : 'sky'} />
             ))}
           </div>
         </div>
