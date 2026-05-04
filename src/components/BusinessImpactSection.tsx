@@ -51,7 +51,7 @@ export default function BusinessImpactSection() {
   }, [isVisible]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-[#0f172a] py-24 px-6">
+    <section id="section-business-impact" className="relative min-h-screen flex items-center justify-center bg-[#0f172a] py-24 px-6">
       <div ref={ref} className="max-w-6xl w-full">
         <h2
           className={`text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-20 transition-all duration-700 ${

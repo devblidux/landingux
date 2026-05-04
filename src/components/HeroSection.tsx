@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [titleVisible, setTitleVisible] = useState(false);
   const [subtitleVisible, setSubtitleVisible] = useState(false);
-  const [ctaVisible, setCtaVisible] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -76,17 +74,11 @@ export default function HeroSection() {
   useEffect(() => {
     const t1 = setTimeout(() => setTitleVisible(true), 300);
     const t2 = setTimeout(() => setSubtitleVisible(true), 800);
-    const t3 = setTimeout(() => setCtaVisible(true), 1300);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
-  const scrollToNext = () => {
-    const next = document.getElementById('section-before');
-    if (next) next.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#0a0e1a]">
+    <section id="section-hero" className="relative h-screen flex items-center justify-center overflow-hidden bg-[#0a0e1a]">
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a] via-transparent to-[#0a0e1a] z-[1]" />
 
@@ -110,17 +102,6 @@ export default function HeroSection() {
         >
           Cómo evolucionamos en 6 meses para acelerar decisiones y reducir incertidumbre
         </p>
-
-        <button
-          onClick={scrollToNext}
-          className={`mt-12 group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-500 to-cyan-500 text-white font-semibold text-lg rounded-full overflow-hidden transition-all duration-1000 hover:scale-105 hover:shadow-[0_0_40px_rgba(56,189,248,0.3)] ${
-            ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <span className="relative z-10">Comenzar historia</span>
-          <ChevronDown className="relative z-10 w-5 h-5 animate-bounce" />
-          <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        </button>
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0f172a] to-transparent z-[2]" />

@@ -84,7 +84,7 @@ export default function TurningPointSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-[#0a0e1a] overflow-hidden py-24 px-6">
+    <section id="section-turning-point" className="relative min-h-screen flex items-center justify-center bg-[#0a0e1a] overflow-hidden py-24 px-6">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a] via-transparent to-[#0a0e1a] z-[1]" />
 

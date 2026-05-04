@@ -82,7 +82,7 @@ export default function FinalSection() {
   }, []);
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#0a0e1a]">
+    <section id="section-final" className="relative h-screen flex items-center justify-center overflow-hidden bg-[#0a0e1a]">
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a]/80 via-transparent to-[#0a0e1a]/90 z-[1]" />
 

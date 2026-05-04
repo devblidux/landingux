@@ -62,7 +62,7 @@ export default function TimelineSection() {
   }, [isVisible]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-[#0a0e1a] py-24 px-6">
+    <section id="section-timeline" className="relative min-h-screen flex items-center justify-center bg-[#0a0e1a] py-24 px-6">
       <div ref={ref} className="max-w-5xl w-full">
         <h2
           className={`text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-20 transition-all duration-700 ${

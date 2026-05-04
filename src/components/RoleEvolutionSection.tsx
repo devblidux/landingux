@@ -29,7 +29,7 @@ export default function RoleEvolutionSection() {
   }, [isVisible]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-[#0a0e1a] py-24 px-6">
+    <section id="section-role-evolution" className="relative min-h-screen flex items-center justify-center bg-[#0a0e1a] py-24 px-6">
       <div ref={ref} className="max-w-4xl w-full text-center">
         <h2
           className={`text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-16 transition-all duration-700 ${
