@@ -9,11 +9,15 @@ export type TeamResource = {
   description: string;
   tag: string;
   actionLabel: string;
-  /** Cuando tengas el archivo o URL, asigna aquí; si es null se muestra estado “próximamente”. */
+  /**
+   * Enlace al recurso:
+   * - Archivo en el repo: colócalo en `public/recursos/` y usa `/recursos/nombre.ext` (se sugiere descarga en el navegador).
+   * - Página externa (Notion, Drive, etc.): URL absoluta `https://...` (se abre en pestaña nueva sin forzar descarga).
+   */
   href?: string | null;
 };
 
-/** Sustituir `href` cuando los recursos estén listos para descarga. */
+/** Lista editable en código: cada objeto es una tarjeta (puedes duplicar un bloque `{ ... }` para sumar más). */
 export const TEAM_RESOURCES: TeamResource[] = [
   {
     icon: Sparkles,
@@ -22,7 +26,7 @@ export const TEAM_RESOURCES: TeamResource[] = [
       'Skill listo para usar con nuestro UI kit: contexto de componentes, tono y patrones para acelerar diseño y revisión en Claude.',
     tag: 'Claude · Skill',
     actionLabel: 'Descargar skill',
-    href: null,
+    href: '/recursos/achsux-ui-setup.skill',
   },
   {
     icon: BookOpen,
@@ -40,7 +44,7 @@ export const TEAM_RESOURCES: TeamResource[] = [
       'Exportación base de tokens de color, espaciado, radii y tipografía del sistema para prototipos y código.',
     tag: 'Design tokens',
     actionLabel: 'Descargar JSON',
-    href: null,
+    href: '/recursos/achs-tokens-v2.json',
   },
 ];
 
@@ -53,6 +57,8 @@ function ResourceCard({
 }) {
   const { icon: Icon, title, description, tag, actionLabel, href } = resource;
   const hasLink = Boolean(href);
+
+  const isLocalPublicFile = Boolean(href?.startsWith('/'));
 
   const shell =
     'group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 transition-all duration-700 hover:border-white/[0.14] hover:bg-white/[0.05] sm:p-7';
@@ -71,9 +77,9 @@ function ResourceCard({
         {hasLink && href ? (
           <a
             href={href}
-            download
             target="_blank"
             rel="noopener noreferrer"
+            {...(isLocalPublicFile ? { download: true } : {})}
             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:scale-[1.02] hover:shadow-sky-500/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
           >
             <Download className="h-4 w-4 shrink-0" aria-hidden />
@@ -131,7 +137,6 @@ export default function FutureSection() {
           }`}
         >
           Material compartido del UI kit y del flujo con IA: skill para Claude, prompts reutilizables y tokens en JSON.
-          Los enlaces de descarga se activarán cuando publiquemos cada entregable.
         </p>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
@@ -139,14 +144,6 @@ export default function FutureSection() {
             <ResourceCard key={resource.title} resource={resource} visible={visibleCards[i] ?? false} />
           ))}
         </div>
-
-        <p
-          className={`mt-12 text-center text-xs text-white/35 transition-all duration-700 delay-300 ${
-            isVisible ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          ¿Falta algo? Estos bloques están pensados para sumar más recursos sin cambiar la estructura.
-        </p>
       </div>
     </section>
   );
