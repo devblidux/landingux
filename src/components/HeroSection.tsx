@@ -100,7 +100,7 @@ export default function HeroSection() {
             subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          Cómo evolucionamos en 6 meses para acelerar decisiones y reducir incertidumbre
+          Cómo evolucionamos desde la metodología para acelerar la toma de decisiones, reducir la incertidumbre y llegar mejor y más rápido a las soluciones
         </p>
       </div>
 

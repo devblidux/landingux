@@ -1,17 +1,92 @@
 import { useEffect, useRef, useState } from 'react';
+import {
+  ArrowLeftRight,
+  Layers3,
+  RefreshCw,
+  Smartphone,
+  type LucideIcon,
+} from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+
+type LegacyPain = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  /** Degradado del badge del icono */
+  iconBg: string;
+  iconGlow: string;
+  /** Borde superior / acento de tarjeta */
+  cardAccent: string;
+};
+
+/** Dolores del flujo anterior — cada uno es una tarjeta visual con icono y color propio. */
+const LEGACY_PAINS: LegacyPain[] = [
+  {
+    icon: RefreshCw,
+    title: 'Retrabajo en bucle',
+    description:
+      'Validaciones con negocio llegaban tarde: decisiones cuando el diseño ya estaba cerrado y volvíamos atrás una y otra vez.',
+    iconBg: 'from-amber-500 to-orange-600',
+    iconGlow: 'shadow-amber-500/25',
+    cardAccent: 'border-t-2 border-t-amber-500/65',
+  },
+  {
+    icon: ArrowLeftRight,
+    title: 'Idas y vueltas sin síntesis',
+    description:
+      'Mucho ping‑pong entre técnica y negocio para alinear detalles finos, sin un prototipo que sintetizara el acuerdo.',
+    iconBg: 'from-rose-500 to-pink-600',
+    iconGlow: 'shadow-rose-500/25',
+    cardAccent: 'border-t-2 border-t-rose-500/60',
+  },
+  {
+    icon: Layers3,
+    title: 'Pantallas sueltas en Figma',
+    description:
+      'Exceso de vistas sin narrativa compartida y poca documentación útil para decidir con claridad.',
+    iconBg: 'from-violet-500 to-indigo-600',
+    iconGlow: 'shadow-violet-500/25',
+    cardAccent: 'border-t-2 border-t-violet-500/60',
+  },
+  {
+    icon: Smartphone,
+    title: '“Navegable”, pero poco realista',
+    description:
+      'El tiempo justo impedía acercarse a una experiencia creíble; las maquetas navegables no reflejaban el producto real.',
+    iconBg: 'from-cyan-500 to-teal-600',
+    iconGlow: 'shadow-cyan-500/25',
+    cardAccent: 'border-t-2 border-t-cyan-500/65',
+  },
+];
 
 export default function TurningPointSection() {
   const { ref, isVisible } = useScrollAnimation(0.3);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [phase, setPhase] = useState(0);
+  const [painsVisible, setPainsVisible] = useState(false);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible) {
+      setPhase(0);
+      setPainsVisible(false);
+      return;
+    }
     const t1 = setTimeout(() => setPhase(1), 600);
     const t2 = setTimeout(() => setPhase(2), 2400);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, [isVisible]);
+
+  useEffect(() => {
+    if (!isVisible || phase < 2) {
+      if (phase < 2) setPainsVisible(false);
+      return;
+    }
+    const t = setTimeout(() => setPainsVisible(true), 700);
+    return () => clearTimeout(t);
+  }, [phase, isVisible]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -84,36 +159,78 @@ export default function TurningPointSection() {
   }, []);
 
   return (
-    <section id="section-turning-point" className="relative min-h-screen flex items-center justify-center bg-[#0a0e1a] overflow-hidden py-24 px-6">
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a] via-transparent to-[#0a0e1a] z-[1]" />
+    <section id="section-turning-point" className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0a0e1a] px-6 py-24">
+      <canvas ref={canvasRef} className="absolute inset-0 z-0 h-full w-full" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#0f172a] via-transparent to-[#0a0e1a]" />
 
-      <div ref={ref} className="relative z-10 text-center max-w-4xl mx-auto">
+      <div ref={ref} className="relative z-10 mx-auto max-w-5xl text-center">
         <h2
-          className={`text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-16 transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          className={`mb-16 text-3xl font-bold text-white transition-all duration-700 sm:text-4xl md:text-5xl ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
           }`}
         >
           El punto de inflexión
         </h2>
 
-        <div className="relative h-40 sm:h-48 flex items-center justify-center">
+        <div className="relative flex h-40 items-center justify-center sm:h-48">
           <p
-            className={`absolute inset-0 flex items-center justify-center text-2xl sm:text-3xl md:text-5xl font-bold transition-all duration-1000 ${
-              phase >= 1 ? 'opacity-0 scale-90 -translate-y-4 blur-sm' : 'opacity-100 scale-100 translate-y-0'
+            className={`absolute inset-0 flex items-center justify-center text-2xl font-bold transition-all duration-1000 sm:text-3xl md:text-5xl ${
+              phase >= 1 ? 'scale-90 -translate-y-4 opacity-0 blur-sm' : 'translate-y-0 scale-100 opacity-100'
             } text-white/80`}
           >
             ¿Cómo diseñamos pantallas?
           </p>
           <p
-            className={`absolute inset-0 flex items-center justify-center text-2xl sm:text-3xl md:text-5xl font-bold transition-all duration-1000 ${
-              phase >= 2 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 translate-y-4 blur-sm'
+            className={`absolute inset-0 flex items-center justify-center text-2xl font-bold transition-all duration-1000 sm:text-3xl md:text-5xl ${
+              phase >= 2 ? 'translate-y-0 scale-100 opacity-100' : 'translate-y-4 scale-90 opacity-0 blur-sm'
             }`}
           >
             <span className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
               ¿Cómo reducimos incertidumbre antes de construir?
             </span>
           </p>
+        </div>
+
+        <div
+          className={`mx-auto mt-8 transition-all duration-700 sm:mt-12 ${
+            painsVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
+          }`}
+          aria-live="polite"
+        >
+          <div className="mx-auto mb-6 inline-flex rounded-full border border-white/10 bg-black/30 px-4 py-2 backdrop-blur-md">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-200/85">
+              Antes · dolores del flujo anterior
+            </span>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+            {LEGACY_PAINS.map((pain, i) => {
+              const Icon = pain.icon;
+              return (
+                <article
+                  key={pain.title}
+                  className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-white/[0.02] px-4 py-4 text-left shadow-lg shadow-black/20 backdrop-blur-sm transition-all duration-500 hover:border-white/[0.14] hover:from-white/[0.08] sm:px-5 sm:py-5 ${pain.cardAccent} ${
+                    painsVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                  }`}
+                  style={{ transitionDelay: painsVisible ? `${100 + i * 110}ms` : '0ms' }}
+                >
+                  <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br from-white/[0.07] to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
+
+                  <div className="relative flex gap-3 sm:gap-4">
+                    <div
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br shadow-lg transition-transform duration-300 group-hover:scale-105 sm:h-12 sm:w-12 ${pain.iconBg} ${pain.iconGlow}`}
+                    >
+                      <Icon className="h-5 w-5 text-white sm:h-6 sm:w-6" strokeWidth={1.85} aria-hidden />
+                    </div>
+                    <div className="min-w-0 flex-1 pt-0.5">
+                      <h3 className="text-sm font-bold leading-snug text-white sm:text-base">{pain.title}</h3>
+                      <p className="mt-1.5 text-[11px] leading-relaxed text-slate-400 sm:text-xs">{pain.description}</p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
